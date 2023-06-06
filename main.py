@@ -24,7 +24,7 @@ sample_path = 'django_sample'
 # result = os.system('dir')
 
 
-def rename_project(old_name, new_name, folder_path):
+def rename_project(old_name, new_name, folder_path, new_app_name):
     # Повний шлях до папки
     folder_path_full = os.path.join(folder_path, old_name)
 
@@ -45,8 +45,12 @@ def rename_project(old_name, new_name, folder_path):
 
             with open(os.path.join(folder_path, new_name, name_file_project), 'w') as file:
                 for line in lines:
-                    new_line = line.replace(old_name, new_name)
-                    file.write(new_line)
+                    if name_file_project == "settings.py":
+                        new_line = line.replace(old_name, new_app_name)
+                        file.write(new_line)
+                    else:
+                        new_line = line.replace(old_name, new_name)
+                        file.write(new_line)
 
 
     return print('Created a new website on django')
@@ -86,7 +90,7 @@ if "__main__" == __name__:
     folder_path = input("> ")
     old_name_app = input("> ")
     new_name_app = input("> ")
-    rename_project(old_name_project, new_name_project, folder_path)
+    rename_project(old_name_project, new_name_project, folder_path, new_name_app)
     rename_app(old_name_app, new_name_app, folder_path)
 
 
